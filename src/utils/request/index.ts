@@ -31,7 +31,7 @@ export const request = async (
 
 // get sign content
 export const getSignContent = (api_nonce: string) => {
-  const api_path = "v2/oauth/token";
+  const api_path = "web/v2/oauth/token";
   const params = {
     client_id: process.env.NEXT_PUBLIC_APPID || "",
     org_id: settings.orgID,

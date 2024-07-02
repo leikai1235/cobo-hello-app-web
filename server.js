@@ -22,7 +22,7 @@ app
       createProxyMiddleware({
         target: "https://api.sandbox.cobo.com",
         changeOrigin: true,
-        pathRewrite: { "^/v2": "" },
+        pathRewrite: { "^/web/v2": "" },
       }),
     );
 
