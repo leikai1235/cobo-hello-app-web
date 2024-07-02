@@ -2,8 +2,9 @@
   "name": "cobo-hello-app-web",
   "version": "0.1.0",
   "private": true,
+
   "scripts": {
-    "dev": "next dev -p 5000",
+    "dev": "node server.js",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -11,9 +12,9 @@
   "dependencies": {
     "@noble/ed25519": "^2.1.0",
     "@noble/hashes": "^1.4.0",
-    "axios": "^1.7.2",
     "crypto-js": "^4.2.0",
-    "http-proxy": "^1.18.1",
+    "express": "^4.19.2",
+    "http-proxy-middleware": "^3.0.0",
     "next": "14.2.4",
     "react": "^18",
     "react-dom": "^18",
