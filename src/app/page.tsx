@@ -8,9 +8,19 @@ import {
   parseJwt,
   getAccessToken,
 } from "@/utils";
+import { getCustodialWallet } from "@/api";
+import Wallet from "@/app/Wallet";
+import Transfer from "@/app/Transfer";
+import "rc-table/assets/index.css";
 export default function Home() {
   const searchParams = useSearchParams();
+
+  const encryptedVerityToken = searchParams?.get("verity_token") || undefined;
+
   const [verityToken, setVerityToken] = useState<string | undefined>();
+
+  const [accessToken, setAccessToken] = useState<string | undefined>();
+
   const [userInfo, setUserInfo] = useState<
     | {
         email: string;
@@ -20,10 +30,11 @@ export default function Home() {
       }
     | undefined
   >();
-  const verity_token = searchParams?.get("verity_token") || undefined;
+
+  const [wallets, setWallets] = useState<any[]>([]);
 
   useEffect(() => {
-    const code = getRouteQueryValue(verity_token);
+    const code = getRouteQueryValue(encryptedVerityToken);
     if (!code) return;
     setVerityToken(code);
   }, [searchParams]);
@@ -33,7 +44,6 @@ export default function Home() {
       if (!verityToken) return;
       const verifyObject = await JSON.parse(decrypt(verityToken) || "{}");
       const { token, orgID } = verifyObject;
-
       setSetting("orgID", orgID);
 
       if (!token) return;
@@ -45,11 +55,27 @@ export default function Home() {
         roles: jwtInfo.roles,
         orgID,
       });
-
-      await getAccessToken();
     };
     getVerifyInfo();
   }, [verityToken]);
+
+  useEffect(() => {
+    const cb = async () => {
+      if (!userInfo?.orgID) return;
+      const token = await getAccessToken();
+      setAccessToken(token);
+    };
+    cb();
+  }, [userInfo?.orgID]);
+
+  useEffect(() => {
+    const getWallets = async () => {
+      if (!accessToken) return;
+      const result = await getCustodialWallet();
+      setWallets(result?.data || []);
+    };
+    getWallets();
+  }, [accessToken]);
 
   return (
     <main className="flex min-h-screen flex-col items-center p-24">
@@ -60,6 +86,8 @@ export default function Home() {
         {userInfo?.roleNames &&
           `You have roles: ${userInfo?.roleNames.join(", ")}`}
       </p>
+      <Transfer />
+      <Wallet data={wallets} />
     </main>
   );
 }

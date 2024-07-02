@@ -2,7 +2,6 @@
   "name": "cobo-hello-app-web",
   "version": "0.1.0",
   "private": true,
-
   "scripts": {
     "dev": "node server.js",
     "build": "next build",
@@ -16,13 +15,13 @@
     "express": "^4.19.2",
     "http-proxy-middleware": "^3.0.0",
     "next": "14.2.4",
+    "rc-table": "^7.47.1",
     "react": "^18",
     "react-dom": "^18",
     "sha512": "link:@noble/hashes/sha512"
   },
   "devDependencies": {
     "@types/crypto-js": "^4.2.2",
-    "@types/http-proxy": "^1.17.14",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",

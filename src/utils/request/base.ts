@@ -1,6 +1,7 @@
 export interface RequestOptions extends RequestInit {
   params?: string | Record<string, any>;
   data?: Object;
+  url?: string;
 }
 
 interface RequestHandler {
@@ -22,6 +23,7 @@ export const baseRequest = async <T>(
       method: options.method || "GET",
       headers: {
         "Content-Type": "application/json",
+        "Accept-Language": "*",
         ...(options.headers || {}),
       },
       body: options.data ? JSON.stringify(options.data) : undefined,

@@ -36,9 +36,3 @@ export function parseJwt(token: string) {
   );
   return JSON.parse(jsonPayload);
 }
-
-// export async function getPublicKey(kid: string) {
-//   const key = await client.getSigningKey(kid);
-//   const signingKey = key.getPublicKey();
-//   return signingKey;
-// }
