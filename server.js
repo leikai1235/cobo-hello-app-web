@@ -4,7 +4,7 @@ const createProxyMiddleware =
   require("http-proxy-middleware").createProxyMiddleware;
 
 const hostname = "127.0.0.0";
-const port = 5000;
+const port = 3000;
 const dev = process.env.NEXT_PUBLIC_NODE_ENV !== "production";
 const app = next({
   dev,
@@ -18,12 +18,13 @@ app
   .then(() => {
     const app = express();
     app.use(
-      "/v2",
+      "/web",
       createProxyMiddleware({
         target: "https://api.sandbox.cobo.com",
         changeOrigin: true,
-        pathRewrite: { "^/web/v2": "" },
-      }),
+        secure: false,
+        logger: console,
+      })
     );
 
     app.all("*", (req, res) => {
