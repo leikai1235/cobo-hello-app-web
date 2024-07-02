@@ -31,7 +31,7 @@ export const request = async (
 
 // get sign content
 export const getSignContent = (api_nonce: string) => {
-  const api_path = "web/v2/oauth/token";
+  const api_path = "/web/v2/oauth/token";
   const params = {
     client_id: process.env.NEXT_PUBLIC_APPID || "",
     org_id: settings.orgID,
@@ -73,7 +73,9 @@ export const getAccessToken = async () => {
     return;
   }
 
-  const timestamp = new Date().getTime().toString();
+  // const timestamp = new Date().getTime().toString();
+
+  const timestamp = "1719912732454";
 
   setSetting("timestamp", timestamp);
 
@@ -96,7 +98,7 @@ export const getAccessToken = async () => {
     },
     params,
   };
-
+  console.log(content, signature);
   const data = await baseRequest(url, options);
   console.log(data);
   // setSetting("accessToken", data.accessToken);
